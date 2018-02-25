@@ -15,12 +15,14 @@ import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
 
 public class InvoiceTest {
 	private Invoice invoice;
+	private Invoice invoice2;
 
 	@Before
 	public void createEmptyInvoiceForTheTest() {
 		invoice = new Invoice();
+		invoice2 = new Invoice();
 	}
-
+	
 	@Test
 	public void testEmptyInvoiceHasEmptySubtotal() {
 		Assert.assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(invoice.getNetTotal()));
@@ -103,5 +105,29 @@ public class InvoiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvoiceWithNegativeQuantity() {
 		invoice.addProduct(new DairyProduct("Zsiadle mleko", new BigDecimal("5.55")), -1);
+	}
+	
+	@Test
+	public void testInvoiceHasNumber(){
+		int number = invoice.getNumber();
+		Assert.assertThat(number,Matchers.greaterThan(0));
+	}
+	
+	@Test
+	public void testInvoicesHasDiffrentNumbers(){
+		int number1 = invoice.getNumber();
+		int number2 = invoice2.getNumber();
+		Assert.assertNotEquals(number1, number2);
+	}
+	@Test
+	public void testTheFirstNumberIsLowerThenSocond(){
+		int number1 = invoice.getNumber();
+		int number2 = invoice2.getNumber();
+		Assert.assertThat(number2, Matchers.greaterThan(number1));
+	}
+	
+	@Test
+	public void testTheSameInvoiceDoesNotChangeTheNumber(){
+		Assert.assertEquals(invoice.getNumber(), invoice.getNumber());
 	}
 }
