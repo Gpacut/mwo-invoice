@@ -130,4 +130,33 @@ public class InvoiceTest {
 	public void testTheSameInvoiceDoesNotChangeTheNumber(){
 		Assert.assertEquals(invoice.getNumber(), invoice.getNumber());
 	}
+	
+	@Test
+	public void testPrintedInvoiceHasNumber(){
+		String printed = invoice.printInvoice();
+		String number = String.valueOf(invoice.getNumber());
+		Assert.assertThat(printed, Matchers.containsString(number));
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasNumberAndProducts(){
+		invoice.addProduct(new OtherProduct("Oscypek", new BigDecimal("2.50")));
+		String printed = invoice.printInvoice2();
+		Assert.assertThat(printed, Matchers.containsString("\nOscypek"));
+		
+	}
+	
+	@Test
+	public void testPrintedInvoiceHas(){
+		invoice.addProduct(new OtherProduct("Oscypek", new BigDecimal("2.50")));
+		String printed = invoice.printInvoice3();
+		Assert.assertThat(printed, Matchers.containsString("\nOscypek 3"));
+		
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasWine(){
+		Assert.assertThat(new Wine("AA", BigDecimal("100")), );
+		
+	}
 }

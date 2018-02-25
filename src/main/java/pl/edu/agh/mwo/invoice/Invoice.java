@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import pl.edu.agh.mwo.invoice.product.Product;
 
@@ -48,5 +49,46 @@ public class Invoice {
 
 	public int getNumber() {
 		return invoiceNumber;
+	}
+
+	public String printInvoice() {
+		return String.valueOf(invoiceNumber);
+	}
+	
+	public String printInvoice2() {
+		String print =  String.valueOf(invoiceNumber);
+		for (Product product : products.keySet()) {
+			print += "\n";
+			print += product.getName();
+			print += " " + products.get(product);
+			print += " " + product.getPrice();
+		}
+
+		
+		return print;
+	}
+	
+	public String printInvoice3() {
+		String print =  String.valueOf(invoiceNumber);
+/*		for (Product product : products.keySet()) {
+			print += "\n";
+			print += product.getName();
+			print += " " + products.get(product);
+			print += " " + product.getPrice();
+		}
+*/		
+		print += products.keySet().stream()
+//				.map(product -> "\n" + product.getName() + " " + products.get(product) + " " + product.getPrice())
+				.map(product -> String.format("\n%s %d %s", product.getName(),products.get(product),product.getPrice()))
+				.collect(Collectors.toList());
+		print += "\nLiczba pozycji: " + products.size();
+		
+		return print;
+	}
+	
+	public String printInvoice4() {
+		String print =  String.valueOf(invoiceNumber);
+		
+		return print;
 	}
 }
